@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+	<head>
+	  <meta charset="utf-8">
+	  <title>Calculadora | SAC & Price</title>
+	  <link rel="stylesheet" type="text/css" href="../lib/bootstrap-4.0.0-beta.2-dist/css/bootstrap.css">
+	  <link rel="stylesheet" type="text/css" href="../css/styles.css">
+	  <link rel="stylesheet" type="text/css" href="../css/font-awesome-4.7.0/css/font-awesome.min.css">
+	  <script src="../lib/JQuery/jquery-3.2.1.min.js"></script>
+	  <meta name="viewport" content="width=device-width, initial-scale=1">
+	  <!-- <link rel="icon" type="image/x-icon" href="favicon.ico"> -->
+	</head>
+	<body>
+		<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+		    <a class="navbar-brand green italic" href="#">Calculadora | SAC & Price</a>
+		    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle Navigation">
+		    <span class="navbar-toggler-icon"></span>
+		    </button>
+		    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+		        <ul class="navbar-nav mr-auto">
+		          <li class="nav-item active">
+		            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+		          </li>
+		          <!-- <li class="nav-item force-center"> -->
+		            <div class="logo_navbar"><span><i id="logo_center_navbar" class="fa fa-3x fa-calculator"></i></span></div>
+		          <!-- </li> -->
+		       	</ul>
+		        <form class="form-inline my-2 my-lg-0" id="search_filter">
+					<input class="form-control mr-sm-2 pull-right" type="text" id="btn-search-top" v-model="filterValue" placeholder="Pesquisar" aria-label="Search">
+			        <button class="col-xs-4 btn btn-warning my-2 my-sm-0t cursor-pointer"><i class="fa fa-search"></i></button>
+			        <!--V-on click - chama metodo no controller-->
+				</form>
+		    </div>
+		</nav>
+	    <div class="jumbotron">
+			    <!-- Coluna Container -->
+				<div class="col-xs-8 offset-xs-2 col-sm-8 offset-sm-2 col-md-10 offset-md-1 col-lg-8 offset-lg-2"> 
+					<div class="margin-top-50 container container-itens padding-top-30 padding-bottom-40 bordas-arredondadas ">
+						<!-- Coluna Container Card Intro (X Resultados / X Segundos) -->
+						<div class="col-xs-8 offset-xs-2 col-sm-8 offset-sm-2 col-md-8 offset-md-2 col-lg-10 offset-lg-1">
+							<div class="container margin-bottom-30"> 
+						    	<div class="card text-intro text-center" id="card-intro">
+						    		<p class="italic margin-bottom-10 margin-top-10 padding-right-10 padding-left-10">
+						    			 <h2>Calculadora de Financiamento</h2>
+							   		</p>
+							   	</div>
+						    </div>
+							<div class="container">
+								<div class="card bg-light">
+									<div class="card-header justify-content-between">
+										<div class="row">
+											<!-- TabList -->
+											<div class="col-lg-8 offset-lg-2">
+
+												<div class="container ">
+												<div class="row">
+													<div class="container text-center">
+														<p class="margin-top-10"> <h4>Selecione qual cálculo deseja fazer: </h4></p>
+													</div>
+													</div>
+													<div class="container" id="sacXprice">
+														<ul class="nav nav-pills justify-content-center lg-3" id="pills-tab" role="tablist">
+														  <li class="nav-item cursor-pointer">
+														    <a class="nav-link active" id="sac" data-toggle="pill">SAC</a>
+														  </li>
+														  <li class="nav-item cursor-pointer">
+														    <a class="nav-link" id="price" data-toggle="pill">Price</a>
+														  </li>
+														</ul>
+													</div>
+													<form class="margin-top-30" id="form">
+																  <div class="form-group row">
+																    <label for="valor" class="col-5 col-form-label">Valor</label> 
+																    <div class="col-7">
+																      <div class="input-group">
+																        <div class="input-group-addon">
+																          <i class="fa fa-money"></i>
+																        </div> 
+																        <input id="valor" name="valor" type="number" v-model="valor" class="form-control here"> 
+																        <div class="input-group-addon append">R$</div>
+																      </div>
+																    </div>
+																  </div>
+																  <div class="form-group row">
+																    <label for="entrada" class="col-5 col-form-label">Entrada</label> 
+																    <div class="col-7">
+																      <div class="input-group">
+																        <div class="input-group-addon">
+																          <i class="fa fa-money"></i>
+																        </div> 
+																        <input id="entrada" name="entrada" type="number" v-model=entrada class="form-control here"> 
+																        <div class="input-group-addon append">R$</div>
+																      </div>
+																    </div>
+																  </div>
+																  <div class="form-group row">
+																    <label for="prestacoes" class="col-5 col-form-label">Número de Prestações</label> 
+																    <div class="col-7">
+																      <input id="prestacoes" name="prestacoes" type="number" v-model="prestacoes" class="form-control here">
+																    </div>
+																  </div>
+																  <div class="form-group row">
+																    <label for="text" class="col-5 col-form-label">Taxa de Juros (% ao Mês)</label> 
+																    <div class="col-7">
+																      <input id="juros" name="text" type="number" v-model="juros" class="form-control here">
+																    </div>
+																  </div> 
+																  <div class="form-group">
+																    <div class="w100">
+																      <button name="submit" type="submit" v-bind:enabled="isValid" class="btn btn-primary w100">Calcular</button>
+																    </div>
+																  </div>
+													</form>
+												</div>
+											</div>
+							    		</div>
+							    		<div class="row">
+							    			<div class="container margin-top-50 text-center" id="resultadosPrice">
+							    				<p><h2>Resultados</h2></p>
+
+							    				<table class="table table-bordered table-info">
+										            <tbody>
+										            <tr id="ValorPrimPrestacao">
+													     <td>Valor 1ª Prestação</td>
+													     <td>{{  }}</td>
+													</tr>
+													<tr id="ValorUltimaPrestacao">
+													     <td>Valor 2ª Prestação</td>
+													     <td>{{ saldo_devedor }}</td>
+													</tr>
+										            </tbody>
+        										</table>
+							    			
+							    				<table class="table table-bordered table-resultados">
+													 <thead>
+													    <tr>
+													      <th>Nº</th>
+													      <th>Prestação</th>
+													      <th>Juros</th>
+													      <th>Amortização</th>
+													      <th>Saldo Devedor</th>
+													    </tr>
+													  </thead>
+													  <tbody>
+													    <tr>
+													      <th scope="row">1</th>
+													      <td>Mark</td>
+													      <td>Otto</td>
+													      <td>@mdo</td>
+													    </tr>
+													  </tbody>
+												</table>
+							    			</div>
+							    			<div class="container margin-top-50 text-center" id="resultadosSAC">
+							    				<p><h2>Resultados</h2></p>
+
+							    				<table class="table table-bordered table-info">
+										            <tbody>
+										            <tr id="valorPrestacao">
+													     <td scope="row">Valor da Prestação</td>
+													     <td>{{ tabela.escolha }}</td>
+													</tr>
+										            </tbody>
+        										</table>
+							    			
+							    				<table class="table table-bordered table-resultados">
+													 <thead>
+													    <tr>
+													      <th>Nº</th>
+													      <th>Prestação</th>
+													      <th>Juros</th>
+													      <th>Amortização</th>
+													      <th>Saldo Devedor</th>
+													    </tr>
+													  </thead>
+													  <tbody>
+													    <tr>
+													      <th scope="row">1</th>
+													      <td>Mark</td>
+													      <td>Otto</td>
+													      <td>@mdo</td>
+													    </tr>
+													  </tbody>
+												</table>
+							    			</div>
+							    		</div>
+						    		</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+		</div>
+		
+	</body>
+	
+	<!-- <script src="https://unpkg.com/vue@2.5.3/dist/vue.js" defer></script> -->
+	<script src="../lib/Lodash/lodash.js"></script>
+	<script src="../lib/VueJs/vue.js" defer></script>
+	<script src="../js/controller.js" defer></script>
+	<script src="../js/scripts.js" defer></script>
+	<script src="../lib/bootstrap-4.0.0-beta.2-dist/js/bootstrap.bundle.min.js" defer></script>
+	<!--defer usado para exec js qnd DOM é carregada, sem atrasar carregamento
+	async é para quando estiver disponível para carregar */ -->
+</html>
